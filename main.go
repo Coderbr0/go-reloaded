@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func remove(slice []string, s int) []string {
@@ -30,67 +31,84 @@ func main() {
 	strArr := ReadFile()
 	fmt.Printf("\n")
 	var newWords []string
-	for _, word := range strArr {
-		if word == "[" || word == "(cap)" || word == "(up)" || word == "(cap," || word == "6)" || word == "(low," || word == "3)" || word == "]" {
-			continue
+	for i, word := range strArr {
+		// if word == "(cap)" || word == "(up)" || word == "(cap," || word == "6)" || word == "(low," || word == "3)" {
+		// 	if word == "(cap,"
+		// 	continue
+		// }
+		if word == "(cap)" {
+			newWords[i-1] = strings.Title(strArr[i-1])
 		}
 		newWords = append(newWords, word)
 	}
 	fmt.Println(newWords)
 }
 
-//func ToUpper(str string) string
+// func ToUpper(str string) string
 
-//func ToLower(str string) string
+// func ToLower(str string) string
 
 /* hexadecimal to decimal
-package main  
-  
-import (  
- "fmt"  
- "math"  
- "strconv"  
- "strings"  
-)  
-func hexaNumberToInteger(hexaString string) string {  
- // replace 0x or 0X with empty String  
- numberStr := strings.Replace(hexaString, "0x", "", -1)  
- numberStr = strings.Replace(numberStr, "0X", "", -1)  
- return numberStr  
-}  
-  
-func main() {  
- var hexaNumber string  
- fmt.Print("Enter Hexadecimal Number:")  
- fmt.Scanln(&hexaNumber)  
- output, err := strconv.ParseInt(hexaNumberToInteger(hexaNumber), 16, 64)  
- if err != nil {  
-  fmt.Println(err)  
-  return  
- }  
- fmt.Printf("Output %d", output)  
-}  
+package main
+
+import (
+ "fmt"
+ "math"
+ "strconv"
+ "strings"
+)
+func hexaNumberToInteger(hexaString string) string {
+ // replace 0x or 0X with empty String
+ numberStr := strings.Replace(hexaString, "0x", "", -1)
+ numberStr = strings.Replace(numberStr, "0X", "", -1)
+ return numberStr
+}
+
+func main() {
+ var hexaNumber string
+ fmt.Print("Enter Hexadecimal Number:")
+ fmt.Scanln(&hexaNumber)
+ output, err := strconv.ParseInt(hexaNumberToInteger(hexaNumber), 16, 64)
+ if err != nil {
+  fmt.Println(err)
+  return
+ }
+ fmt.Printf("Output %d", output)
+}
 */
 
 /* binary to decimal
-package main  
-  
-import (  
- "fmt"  
- "strconv"  
-)  
-  
-func main() {  
- var binary string  
- fmt.Print("Enter Binary Number:")  
- fmt.Scanln(&binary)  
- output, err := strconv.ParseInt(binary, 2, 64)  
- if err != nil {  
-  fmt.Println(err)  
-  return  
- }  
-  
- fmt.Printf("Output %d", output)  
-  
-}  
+package main
+
+import (
+ "fmt"
+ "strconv"
+)
+
+func main() {
+ var binary string
+ fmt.Print("Enter Binary Number:")
+ fmt.Scanln(&binary)
+ output, err := strconv.ParseInt(binary, 2, 64)
+ if err != nil {
+  fmt.Println(err)
+  return
+ }
+
+ fmt.Printf("Output %d", output)
+
+}
+*/
+/*
+package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+func main() {
+    res := strings.Title("this is a test sentence")
+    fmt.Println(res)
+}
 */
