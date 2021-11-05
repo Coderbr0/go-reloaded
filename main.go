@@ -27,16 +27,16 @@ func main() {
 	strArr := ReadFile()
 	fmt.Printf("\n")
 	var newWords []string
-	for i, word := range strArr {
-
+	for i, word := range strArr { //this can also be written as i := range strArr {}; value can be omitted but not vice versa (index has to be omitted with underscore _ )
+								  //without word value defined we would use strArr[i] in if statements; word is equivalent to strArr[i] 
 		if word == "(cap)" {
-			newWords[i-1] = strings.Title(strArr[i-1])
-			continue
+			newWords[len(newWords)-1] = strings.Title(strArr[i-1]) // result is newWords[len(newWords)-1] as we want to capitalize word of previous index and assign to new string (newWords); we don't want to iterate over and modify current string (strArr) as this would be bad practice
+			continue                                               // continue skips "(cap)" string and moves on to the next word, therefore omitting "(cap)"
 		} else if word == "(up)" {
-			newWords[len(newWords)-1] = strings.ToUpper(strArr[i-1])
-			continue
-		} else if word == "(cap," && strArr[i+1] == "6)" { // word is equivalent to strArr[i]
-			newWords[len(newWords)-6] = strings.Title(strArr[i-6])
+			newWords[len(newWords)-1] = strings.ToUpper(strArr[i-1])  //newWords[i-1] wouldn't take into consideration shortening of total elements in the slice after each operation e.g. when "(cap)" is omitted in previous operation
+			continue												  //so we use newWords[len(newWords)-1]
+		} else if word == "(cap," && strArr[i+1] == "6)" {
+			newWords[len(newWords)-6] = strings.Title(strArr[i-6])  //[i-1] for previous index; [i-6] for previous 6 in index
 			newWords[len(newWords)-5] = strings.Title(strArr[i-5])
 			newWords[len(newWords)-4] = strings.Title(strArr[i-4])
 			newWords[len(newWords)-3] = strings.Title(strArr[i-3])
@@ -52,6 +52,9 @@ func main() {
 			continue
 		} else if word == "3)" {
 			continue
+		} else if word == "," {
+			newWords[len(newWords)-1] += ","	//concatenates (adds) the comma to end of string; can also be written as newWords[len(newWords)-1] = newWords[len(newWords)-1] + ","
+			continue							//continue skips the extra "," that is read by the computer as a separate word due to the space between text and "," and moves on to the next word, therefore omitting the extra ","
 		}
 		newWords = append(newWords, word)
 	}
