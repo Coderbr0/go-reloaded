@@ -25,6 +25,8 @@ func ReadFile() []string {
 func main() {
 	fmt.Println(ReadFile()) // calling ReadFile() function and printing as output the text in sample.txt
 	strArr := ReadFile()
+	num := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	fmt.Println(n)
 	fmt.Printf("\n")
 	var newWords []string
 	for i, word := range strArr { //this can also be written as i := range strArr {}; value can be omitted but not vice versa (index has to be omitted with underscore _ )
@@ -35,6 +37,9 @@ func main() {
 		} else if word == "(up)" {
 			newWords[len(newWords)-1] = strings.ToUpper(strArr[i-1])  //newWords[i-1] wouldn't take into consideration shortening of total elements in the slice after each operation e.g. when "(cap)" is omitted in previous operation
 			continue												  //so we use newWords[len(newWords)-1]
+		} else if word == "(low)" {
+			newWords[len(newWords)-1] = strings.ToLower(strArr[i-1])
+			continue
 		} else if word == "(cap," && strArr[i+1] == "6)" {
 			newWords[len(newWords)-6] = strings.Title(strArr[i-6])  //[i-1] for previous index; [i-6] for previous 6 in index
 			newWords[len(newWords)-5] = strings.Title(strArr[i-5])
@@ -55,7 +60,26 @@ func main() {
 		} else if word == "," {
 			newWords[len(newWords)-1] += ","	//concatenates (adds) the comma to end of string; can also be written as newWords[len(newWords)-1] = newWords[len(newWords)-1] + ","
 			continue							//continue skips the extra "," that is read by the computer as a separate word due to the space between text and "," and moves on to the next word, therefore omitting the extra ","
+		} else if word == "(up," && strArr[i+1] == num {
+			for num :=  
 		}
+		
+		// else if word == "." {
+		// 	newWords[len(newWords)-1] += "."
+		// 	continue
+		// } else if word == "!" {
+		// 	newWords[len(newWords)-1] += "!"
+		// 	continue
+		// } else if word == "?" {
+		// 	newWords[len(newWords)-1] += "?"
+		// 	continue
+		// } else if word == ":" {
+		// 	newWords[len(newWords)-1] += ":"
+		// 	continue
+		// } else if word == ";" {
+		// 	newWords[len(newWords)-1] += ";"
+		// 	continue
+		// }
 		newWords = append(newWords, word)
 	}
 	fmt.Println(newWords)
