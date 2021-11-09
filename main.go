@@ -61,23 +61,22 @@ func main() {
 		} else if word == "," {
 			newWords[len(newWords)-1] += ","	//concatenates (adds) the comma to end of string; can also be written as newWords[len(newWords)-1] = newWords[len(newWords)-1] + ","
 			continue							//continue skips the extra "," that is read by the computer as a separate word due to the space between text and "," and moves on to the next word, therefore omitting the extra ","
+		} else if word == "." {
+			newWords[len(newWords)-1] += "."
+			continue
+		} else if word == "!" {
+			newWords[len(newWords)-1] += "!"
+			continue
+		} else if word == "?" {
+			newWords[len(newWords)-1] += "?"
+			continue
+		} else if word == ":" {
+			newWords[len(newWords)-1] += ":"
+			continue
+		} else if word == ";" {
+			newWords[len(newWords)-1] += ";"
+			continue
 		}
-		// else if word == "." {
-		// 	newWords[len(newWords)-1] += "."
-		// 	continue
-		// } else if word == "!" {
-		// 	newWords[len(newWords)-1] += "!"
-		// 	continue
-		// } else if word == "?" {
-		// 	newWords[len(newWords)-1] += "?"
-		// 	continue
-		// } else if word == ":" {
-		// 	newWords[len(newWords)-1] += ":"
-		// 	continue
-		// } else if word == ";" {
-		// 	newWords[len(newWords)-1] += ";"
-		// 	continue
-		// }
 		newWords = append(newWords, word)
 	}
 	fmt.Println(newWords)
