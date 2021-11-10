@@ -76,6 +76,15 @@ func main() {
 		} else if word == ";" {
 			newWords[len(newWords)-1] += ";"
 			continue
+		} else if word == "..." {
+			newWords[len(newWords)-1] += "..."
+			continue
+		} else if word == "!?" {
+			newWords[len(newWords)-1] += "!?"
+			continue
+		} else if word == "?!" {				//?! is an alternative way of writing !?
+			newWords[len(newWords)-1] += "?!"
+			continue
 		}
 		newWords = append(newWords, word)
 	}
