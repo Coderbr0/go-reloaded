@@ -27,6 +27,7 @@ func main() {
 	strArr := ReadFile()
 	fmt.Printf("\n")
 	var newWords []string
+	insideQuotes := true
 	for i, word := range strArr { //this can also be written as i := range strArr {}; value can be omitted but not vice versa (index has to be omitted with underscore _ )
 								  //without word value defined we would use strArr[i] in if statements; word is equivalent to strArr[i] 
 		if word == "(cap)" {
@@ -85,6 +86,12 @@ func main() {
 		} else if word == "?!" {				//?! is an alternative way of writing !?
 			newWords[len(newWords)-1] += "?!"
 			continue
+		} else if word == "'" {
+			if insideQuotes {
+				// do code for first single quote
+			} else {
+				// do code for second quote; place boolean condition insideQuotes == false; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks
+			}
 		}
 		newWords = append(newWords, word)
 	}
