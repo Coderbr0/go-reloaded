@@ -27,7 +27,6 @@ func main() {
 	strArr := ReadFile()
 	fmt.Printf("\n")
 	var newWords []string
-	insideQuotes := true
 	for i, word := range strArr { //this can also be written as i := range strArr {}; value can be omitted but not vice versa (index has to be omitted with underscore _ )
 								  //without word value defined we would use strArr[i] in if statements; word is equivalent to strArr[i] 
 		if word == "(cap)" {
@@ -37,7 +36,7 @@ func main() {
 			newWords[len(newWords)-1] = strings.ToUpper(strArr[i-1])  //newWords[i-1] wouldn't take into consideration shortening of total elements in the slice after each operation e.g. when "(cap)" is omitted in previous operation
 			continue												  //so we use newWords[len(newWords)-1]
 		} else if word == "(low)" {
-			newWords[len(newWords)-1] = strings.ToLower(strArr[i-1])
+			newWords[len(newWords)-1] = strings.ToLower(strArr[i-1])  //newWords[len(newWords)-1] represents the last element of the new slice of words
 			continue
 		} else if word == "(cap," {									//alternative with specified number: else if word == "(cap," && strArr[i+1] == "6)" { 
 			numWords := strArr[i+1][0]-48							//newWords[len(newWords)-6] = strings.Title(strArr[i-6]) 
@@ -86,12 +85,12 @@ func main() {
 		} else if word == "?!" {				//?! is an alternative way of writing !?
 			newWords[len(newWords)-1] += "?!"
 			continue
-		} else if word == "'" {
-			if insideQuotes {
-				// do code for first single quote
-			} else {
-				// do code for second quote; place boolean condition insideQuotes == false; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks
-			}
+		} else if i > 0 && strArr[i-1] == "'" { //i > 0 is there as we can't have an index less than 0 to accommodate strArr[i-1] ("index out of range")
+		 	newWords[len(newWords)-1] += word
+			continue 							//continue used to avoid having the word twice e.g. awesome awesome; finding "'" at the previous index e.g. when the iteration reaches awesome; continue skips appending the current word e.g. the duplication of awesome
+		} else if word == "'" && newWords[len(newWords)-1][0] == '\''   {	//insideQuotes set to true by default; this is code for second single quotation mark; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks				
+		    newWords[len(newWords)-1] += word
+			continue							//'\'' single quotes is a rune and having backslash escapes it
 		}
 		newWords = append(newWords, word)
 	}
