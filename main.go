@@ -27,6 +27,7 @@ func main() {
 	strArr := ReadFile()
 	fmt.Printf("\n")
 	var newWords []string
+	insideQuotes := true
 	for i, word := range strArr { //this can also be written as i := range strArr {}; value can be omitted but not vice versa (index has to be omitted with underscore _ )
 								  //without word value defined we would use strArr[i] in if statements; word is equivalent to strArr[i] 
 		if word == "(cap)" {
@@ -85,14 +86,16 @@ func main() {
 		} else if word == "?!" {				//?! is an alternative way of writing !?
 			newWords[len(newWords)-1] += "?!"
 			continue
-		} else if i > 0 && strArr[i-1] == "'" &&  len(newWords[len(newWords)-1]) == 1 { //i > 0 as we can't have an index less than 0 to accommodate strArr[i-1] ("index out of range")
+		} else if i > 0 && strArr[i-1] == "'" && len(newWords[len(newWords)-1]) == 1 { //i > 0 as we can't have an index less than 0 to accommodate strArr[i-1] ("index out of range")
 			newWords[len(newWords)-1] += word   //for first quotation mark in ' awesome '
+			insideQuotes = false
 			continue 							//continue used to avoid having the word twice e.g. awesome awesome; finding "'" at the previous index e.g. when the iteration reaches awesome; continue skips appending the current word e.g. the duplication of awesome
-		} else if i > 0 && word == "'" && newWords[len(newWords)-1][0] == '\''   {	//newWords[len(newWords)-1][0] means first character of the last element of the newWords slice; len(newWords) by default is set to zero when defined (var newWords []string) so i > 0 required for [len(newWords)-1] to avoid "index out of range" error
+		} else if i > 0 && word[0] == '\'' && insideQuotes == false {	//newWords[len(newWords)-1][0] means first character of the last element of the newWords slice; len(newWords) by default is set to zero when defined (var newWords []string) so i > 0 required for [len(newWords)-1] to avoid "index out of range" error
 		    newWords[len(newWords)-1] += word	//for second quotation mark in ' awesome '
-			continue							//'\'' single quotes is a rune and having backslash escapes it
-		}
-		newWords = append(newWords, word)
+			insideQuotes = true
+			continue							//'\'' single quotes is a rune and having backslash escapes it	
+		}										//insideQuotes set to true by default; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks	
+		newWords = append(newWords, word)		//boolean variable insideQuotes is required to work for strings with multiple words inside quotes e.g. hello ' awesome fish ' nimo
 	}
 	fmt.Println(newWords)
 }
