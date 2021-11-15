@@ -85,11 +85,11 @@ func main() {
 		} else if word == "?!" {				//?! is an alternative way of writing !?
 			newWords[len(newWords)-1] += "?!"
 			continue
-		} else if i > 0 && strArr[i-1] == "'" { //i > 0 is there as we can't have an index less than 0 to accommodate strArr[i-1] ("index out of range")
-		 	newWords[len(newWords)-1] += word
+		} else if i > 0 && strArr[i-1] == "'" &&  len(newWords[len(newWords)-1]) == 1 { //i > 0 as we can't have an index less than 0 to accommodate strArr[i-1] ("index out of range")
+			newWords[len(newWords)-1] += word   //for first quotation mark in ' awesome '
 			continue 							//continue used to avoid having the word twice e.g. awesome awesome; finding "'" at the previous index e.g. when the iteration reaches awesome; continue skips appending the current word e.g. the duplication of awesome
-		} else if word == "'" && newWords[len(newWords)-1][0] == '\''   {	//insideQuotes set to true by default; this is code for second single quotation mark; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks				
-		    newWords[len(newWords)-1] += word
+		} else if i > 0 && word == "'" && newWords[len(newWords)-1][0] == '\''   {	//newWords[len(newWords)-1][0] means first character of the last element of the newWords slice; len(newWords) by default is set to zero when defined (var newWords []string) so i > 0 required for [len(newWords)-1] to avoid "index out of range" error
+		    newWords[len(newWords)-1] += word	//for second quotation mark in ' awesome '
 			continue							//'\'' single quotes is a rune and having backslash escapes it
 		}
 		newWords = append(newWords, word)
