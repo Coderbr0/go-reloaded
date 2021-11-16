@@ -46,7 +46,7 @@ func main() {
 			newWords = append(newWords, strings.Split(strings.Title(strings.Join(wordsToModify, " ")), " ")...) 
 			continue 	
 		} else if word == "(up," {																			
-			numWords := strArr[i+1][0]-48																		
+			numWords := strArr[i+1][0]-48	//strArr[i+1][0] is in bytes so we -48 to convert back into a string; strArr[i+1][0] is in character format (Char) so we -48 to convert to decimal format (Dec); for example, if we want to change the last 2 words then Char = 2, Dec = 50, without -48 the last 50 words would change 																	
 			wordsToModify := newWords[len(newWords)-int(numWords):] //alternative is strArr[i-int(numWords):i]; i is at the end as we want uppercase up to the index and not after so that we don't uppercase other words  
 			newWords = newWords[:len(newWords)-int(numWords)] //to delete the words not required; when we have square brackets [] we are telling the compiler in Golang to look at what is before the square brackets and get the element at the stated index e.g. [i], [i-1] etc
 			newWords = append(newWords, strings.Split(strings.ToUpper(strings.Join(wordsToModify, " ")), " ")...) //strings.Join to turn slice into string; strings.Split to split string into elements (slice) to append later one by one which is done for consistency
@@ -92,10 +92,14 @@ func main() {
 			continue 							//continue used to avoid having the word twice e.g. awesome awesome; finding "'" at the previous index e.g. when the iteration reaches awesome; continue skips appending the current word e.g. the duplication of awesome
 		} else if i > 0 && word[0] == '\'' && insideQuotes == false {	//newWords[len(newWords)-1][0] means first character of the last element of the newWords slice; len(newWords) by default is set to zero when defined (var newWords []string) so i > 0 required for [len(newWords)-1] to avoid "index out of range" error
 		    newWords[len(newWords)-1] += word	//for second quotation mark in ' awesome '
-			insideQuotes = true
-			continue							//'\'' single quotes is a rune and having backslash escapes it	
-		}										//insideQuotes set to true by default; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks	
-		newWords = append(newWords, word)		//boolean variable insideQuotes is required to work for strings with multiple words inside quotes e.g. hello ' awesome fish ' nimo
+			insideQuotes = true					//insideQuotes set to true by default; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks	
+			continue							//'\'' single quotes is a rune and having backslash escapes it; boolean variable insideQuotes is required to work for strings with multiple words inside quotes e.g. hello ' awesome fish ' nimo
+		} else if word == "a" || word == "A" {
+			if strArr[i+1][0]-97 == 'a' || strArr[i+1][0]-101 == 'e' || strArr[i+1][0]-105 == 'i' || strArr[i+1][0]-111 == 'o' || strArr[i+1][0]-117 == 'u' || strArr[i+1][0]-104 == 'h' {
+				newWords[len(newWords)-1] += "n"	
+			} 
+		}	
+		newWords = append(newWords, word)		
 	}
 	fmt.Println(newWords)
 }
