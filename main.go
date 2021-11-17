@@ -46,13 +46,13 @@ func main() {
 			newWords = append(newWords, strings.Split(strings.Title(strings.Join(wordsToModify, " ")), " ")...) 
 			continue 	
 		} else if word == "(up," {																			
-			numWords := strArr[i+1][0]-48	//strArr[i+1][0] is in bytes so we -48 to convert back into a string; strArr[i+1][0] is in character format (Char) so we -48 to convert to decimal format (Dec); for example, if we want to change the last 2 words then Char = 2, Dec = 50, without -48 the last 50 words would change 																	
+			numWords := strArr[i+1][0]-48	//strArr[i+1][0] is in bytes so we -48 to get the corresponding value as an integer; strArr[i+1][0] is an ascii value (Char) so we -48 to convert to decimal value (Dec as an integer); for example, if we want to change the last 2 words then Char = 2, Dec = 50, without -48 the last 50 words would change 																	
 			wordsToModify := newWords[len(newWords)-int(numWords):] //alternative is strArr[i-int(numWords):i]; i is at the end as we want uppercase up to the index and not after so that we don't uppercase other words  
 			newWords = newWords[:len(newWords)-int(numWords)] //to delete the words not required; when we have square brackets [] we are telling the compiler in Golang to look at what is before the square brackets and get the element at the stated index e.g. [i], [i-1] etc
 			newWords = append(newWords, strings.Split(strings.ToUpper(strings.Join(wordsToModify, " ")), " ")...) //strings.Join to turn slice into string; strings.Split to split string into elements (slice) to append later one by one which is done for consistency
 			continue 	//int(numWords); we cast to int as without it we have bytes
 		} else if word == "(low," {
-			numWords := strArr[i+1][0]-48
+			numWords := strArr[i+1][0]-48 
 			wordsToModify := newWords[len(newWords)-int(numWords):]  
 			newWords = newWords[:len(newWords)-int(numWords)]
 			newWords = append(newWords, strings.Split(strings.ToLower(strings.Join(wordsToModify, " ")), " ")...)
@@ -95,8 +95,10 @@ func main() {
 			insideQuotes = true					//insideQuotes set to true by default; we declare different boolean values (true and false) to carry out different operations for first and second quotation marks	
 			continue							//'\'' single quotes is a rune and having backslash escapes it; boolean variable insideQuotes is required to work for strings with multiple words inside quotes e.g. hello ' awesome fish ' nimo
 		} else if word == "a" || word == "A" {
-			if strArr[i+1][0]-97 == 'a' || strArr[i+1][0]-101 == 'e' || strArr[i+1][0]-105 == 'i' || strArr[i+1][0]-111 == 'o' || strArr[i+1][0]-117 == 'u' || strArr[i+1][0]-104 == 'h' {
-				newWords[len(newWords)-1] += "n"	
+			if strArr[i+1][0] == 'a' || strArr[i+1][0] == 'e' || strArr[i+1][0] == 'i' || strArr[i+1][0] == 'o' || strArr[i+1][0] == 'u' || strArr[i+1][0] == 'h' || strArr[i+1][0] == 'A' || strArr[i+1][0] == 'E' || strArr[i+1][0] == 'I' || strArr[i+1][0] == 'O' || strArr[i+1][0] == 'U' || strArr[i+1][0] == 'H' {
+				changeLetter := word + "n"
+				newWords[len(newWords)-1] = newWords[len(newWords)-1] + " " + changeLetter
+				continue
 			} 
 		}	
 		newWords = append(newWords, word)		
