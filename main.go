@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"strconv"
 )
 
 func ReadFile() []string {
@@ -103,53 +104,26 @@ func main() {
 		} else if word[0] == ',' {				// For the ",don't" in: Punctuation tests are ... kinda boring ,don't you think !?
 			newWords[len(newWords)-1] += "," 
 			word = word[1:] 					// Selecting "don't" in ",don't"; omitting word[0] 
+		} else if word == "(hex)" {
+			if string(strArr[i-1][0]) == "\"" {	// Alternative is strArr[i-1][0] == 34; Decimal value of " is 34; in this case we have casted strArr[i-1][0] to a string
+				newWords[len(newWords)-1] = strArr[i-1][1:] // For: "1E (hex) files were added" (including quotation marks); added quotation marks for educational purposes
+			}
+			numFromHex, _ := strconv.ParseInt(newWords[len(newWords)-1], 16, 64) // ParseInt function returns two values (int64, error) so two variables required (numFromHex, _)
+			newWords[len(newWords)-1] = strconv.Itoa(int(numFromHex)) // Casting numFromHex into int so that Itoa can return a string
+			newWords[len(newWords)-1] = "\"" + newWords[len(newWords)-1] // Adding first quotation mark back to the string after conversion
+			continue
+		} else if word == "(bin)" {
+			numFromBin, _ := (strconv.ParseInt(newWords[len(newWords)-1], 2, 64))
+			newWords[len(newWords)-1] = strconv.Itoa(int(numFromBin))
+			continue
 		}
 		newWords = append(newWords, word)		
 	}
 	fmt.Println(newWords)
 }
-
 /* Alternative way of doing the project:
 
 func remove(slice []string, s int) []string {
 	return append(slice[:s], slice[s+1:]...)
 }
 */
-
-/*
-func main() {
- var hexaNumber string
- fmt.Print("Enter Hexadecimal Number:")
- fmt.Scanln(&hexaNumber)
- output, err := strconv.ParseInt(hexaNumberToInteger(hexaNumber), 16, 64)
- if err != nil {
-  fmt.Println(err)
-  return
- }
- fmt.Printf("Output %d", output)
-}
-*/
-
-/* binary to decimal
-package main
-
-import (
- "fmt"
- "strconv"
-)
-
-func main() {
- var binary string
- fmt.Print("Enter Binary Number:")
- fmt.Scanln(&binary)
- output, err := strconv.ParseInt(binary, 2, 64)
- if err != nil {
-  fmt.Println(err)
-  return
- }
-
- fmt.Printf("Output %d", output)
-
-}
-*/
-
