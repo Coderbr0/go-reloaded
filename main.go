@@ -24,9 +24,9 @@ func ReadFile() []string {
 }
 
 func main() {
-	fmt.Println(ReadFile()) // Calling ReadFile() function and printing as output the text in sample.txt
+	//fmt.Println(ReadFile()) // Calling ReadFile() function and printing as output the text in sample.txt
 	strArr := ReadFile()
-	fmt.Printf("\n")
+	//fmt.Printf("\n")
 	var newWords []string
 	insideQuotes := true
 	for i, word := range strArr { // This can also be written as i := range strArr {}; value can be omitted but not vice versa (index has to be omitted with underscore _ )
@@ -60,32 +60,8 @@ func main() {
 			continue
 		} else if len(word) > 1 && word[1] == ')' { // Specifying len(word) > 1 as some words may be only one character long so word[1] would be out of range; index starts from zero e.g. word[0]
 			continue
-		} else if word == "," {
-			newWords[len(newWords)-1] += ","	// Concatenates (adds) the comma to end of string; can also be written as newWords[len(newWords)-1] = newWords[len(newWords)-1] + ","
-			continue							// continue skips the extra "," that is read by the computer as a separate word due to the space between text and "," and moves on to the next word, therefore omitting the extra ","
-		} else if word == "." {
-			newWords[len(newWords)-1] += "."
-			continue
-		} else if word == "!" {
-			newWords[len(newWords)-1] += "!"
-			continue
-		} else if word == "?" {
-			newWords[len(newWords)-1] += "?"
-			continue
-		} else if word == ":" {
-			newWords[len(newWords)-1] += ":"
-			continue
-		} else if word == ";" {
-			newWords[len(newWords)-1] += ";"
-			continue
-		} else if word == "..." {
-			newWords[len(newWords)-1] += "..."
-			continue
-		} else if word == "!?" {
-			newWords[len(newWords)-1] += "!?"
-			continue
-		} else if word == "?!" {				// ?! is an alternative way of writing !?
-			newWords[len(newWords)-1] += "?!"
+		} else if strings.Contains(",.!?:;...!??!", word) { // If strings.Contains(",.!?:;...!??!", word) is true then do the next line otherwise move on to the next else if statement; strings.Contains returns a boolean value
+			newWords[len(newWords)-1] += word
 			continue
 		} else if i > 0 && strArr[i-1] == "'" && len(newWords[len(newWords)-1]) == 1 { // i > 0 as we can't have an index less than 0 to accommodate strArr[i-1] ("index out of range")
 			newWords[len(newWords)-1] += word   // For first quotation mark in ' awesome '
@@ -119,13 +95,41 @@ func main() {
 		}
 		newWords = append(newWords, word)		
 	}
-	fmt.Println(newWords)
-	Error := os.WriteFile("result.txt", []byte(strings.Join(newWords, " ")), 0777)
-	fmt.Println(Error)
+	//fmt.Println(newWords)
+	os.WriteFile("result.txt", []byte(strings.Join(newWords, " ")), 0777)
 }
 /* Alternative way of doing the project:
 
 func remove(slice []string, s int) []string {
 	return append(slice[:s], slice[s+1:]...)
 }
+*/
+/*		Line 108 to 134 is an alternative way to line 63 to 65
+        // } else if word == "," {
+		// 	newWords[len(newWords)-1] += ","	// Concatenates (adds) the comma to end of string; can also be written as newWords[len(newWords)-1] = newWords[len(newWords)-1] + ","
+		// 	continue							// continue skips the extra "," that is read by the computer as a separate word due to the space between text and "," and moves on to the next word, therefore omitting the extra ","
+		// } else if word == "." {
+		// 	newWords[len(newWords)-1] += "."
+		// 	continue
+		// } else if word == "!" {
+		// 	newWords[len(newWords)-1] += "!"	
+		// 	continue
+		// } else if word == "?" {
+		// 	newWords[len(newWords)-1] += "?"
+		// 	continue
+		// } else if word == ":" {
+		// 	newWords[len(newWords)-1] += ":"
+		// 	continue
+		// } else if word == ";" {
+		// 	newWords[len(newWords)-1] += ";"
+		// 	continue
+		// } else if word == "..." {
+		// 	newWords[len(newWords)-1] += "..."
+		// 	continue
+		// } else if word == "!?" {
+		// 	newWords[len(newWords)-1] += "!?"
+		// 	continue
+		// } else if word == "?!" {				// ?! is an alternative way of writing !?
+		// 	newWords[len(newWords)-1] += "?!"
+		// 	continue
 */
