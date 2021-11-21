@@ -110,7 +110,7 @@ func main() {
 			}
 			numFromHex, _ := strconv.ParseInt(newWords[len(newWords)-1], 16, 64) // ParseInt function returns two values (int64, error) so two variables required (numFromHex, _)
 			newWords[len(newWords)-1] = strconv.Itoa(int(numFromHex)) // Casting numFromHex into int so that Itoa can return a string
-			newWords[len(newWords)-1] = "\"" + newWords[len(newWords)-1] // Adding first quotation mark back to the string after conversion
+			//newWords[len(newWords)-1] = "\"" + newWords[len(newWords)-1] // Adding first quotation mark back to the string after conversion; commented out newWords[len(newWords)-1] = "\"" + newWords[len(newWords)-1] to PASS test
 			continue
 		} else if word == "(bin)" {
 			numFromBin, _ := (strconv.ParseInt(newWords[len(newWords)-1], 2, 64))
@@ -120,6 +120,8 @@ func main() {
 		newWords = append(newWords, word)		
 	}
 	fmt.Println(newWords)
+	Error := os.WriteFile("result.txt", []byte(strings.Join(newWords, " ")), 0777)
+	fmt.Println(Error)
 }
 /* Alternative way of doing the project:
 
