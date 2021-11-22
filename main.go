@@ -60,7 +60,7 @@ func main() {
 			continue
 		} else if len(word) > 1 && word[1] == ')' { // Specifying len(word) > 1 as some words may be only one character long so word[1] would be out of range; index starts from zero e.g. word[0]
 			continue
-		} else if strings.Contains(",.!?:;...!??!", word) { // If strings.Contains(",.!?:;...!??!", word) is true then do the next line otherwise move on to the next else if statement; strings.Contains returns a boolean value
+		} else if strings.Contains(",.!?:;...!??!", word) { // If strings.Contains(",.!?:;...!??!", word) is true then do the next line otherwise move on to the next else if statement; strings.Contains returns a boolean value; strings.Contains iterates over the sequence of the string as well e.g. ... and !?
 			newWords[len(newWords)-1] += word
 			continue
 		} else if i > 0 && strArr[i-1] == "'" && len(newWords[len(newWords)-1]) == 1 { // i > 0 as we can't have an index less than 0 to accommodate strArr[i-1] ("index out of range")
@@ -96,7 +96,7 @@ func main() {
 		newWords = append(newWords, word)		
 	}
 	//fmt.Println(newWords)
-	os.WriteFile("result.txt", []byte(strings.Join(newWords, " ")), 0777)
+	os.WriteFile("result.txt", []byte(strings.Join(newWords, " ")), 0777) // Alternative is os.WriteFile(os.Args[2], []byte(strings.Join(newWords, " ")), 0777); os.Args[2] is for user to be able to create any .txt file if they wanted to e.g. res.txt; with "result.txt", all output files will be named result.txt; for example, go run main.go sample.txt res.txt => result.txt file
 }
 /* Alternative way of doing the project:
 
