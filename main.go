@@ -12,7 +12,7 @@ func ReadFile() []string {
 	var fileInput []string
 	file, err := os.Open(os.Args[1]) // We do this first to open the file
 	if err != nil {
-		fmt.Println("Invalid Input")
+		fmt.Println("Invalid Input") // Alternative with fmt.Println("Invalid input. The named file does not exist"); a descriptive message may make it easier for the user to understand the error; go run main.go samp.txt => Invalid Input
 	}
 	defer file.Close()
 	scanner := bufio.NewScanner(file) // scanner := bufio.NewScanner(file) results in scanner.Split(bufio.ScanLines)
